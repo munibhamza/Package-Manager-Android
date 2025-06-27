@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Accessibility Monitor</string>
+    <string name="installed_apps">Installed Apps</string>
+    <string name="open_drawer">Open Drawer\n</string>
+    <string name="accessibility_service_description">Accesibility Service monitoring launch itents</string>
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+</resources>
