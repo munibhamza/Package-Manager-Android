@@ -1,5 +1,12 @@
 # 📦 Package Manager Android (App Locker)
 
+![Platform](https://img.shields.io/badge/platform-android-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Language](https://img.shields.io/badge/language-kotlin-orange.svg)
+![UI Toolkit](https://img.shields.io/badge/Jetpack%20Compose-enabled-brightgreen.svg)
+
+---
+
 **Package Manager Android** is a native Kotlin-based **App Locker application** built using the latest Android development best practices. It allows users to securely lock selected applications on their device using a custom PIN, enhancing privacy and control over app access.
 
 ---
@@ -29,7 +36,7 @@ This project is built using **modern Android Jetpack libraries** and a scalable 
 - **Architecture**: MVVM + Clean Architecture Principles
 - **State Management**: Compose States + `StateFlow`, `SharedFlow`
 - **Dependency Injection**: Dagger Hilt
-- **Local Storage**: Room Database & DataStore
+- **Local Storage**: Room Database
 - **App Monitoring**: Accessibility Service
 - **Coroutines**: Inactivity timeout, lifecycle-aware flows
 - **Theming**: Dark/Light mode support with dynamic logo
@@ -58,6 +65,14 @@ Repository (Data Coordination)
         ↓
  Room DB & DataStore + AppMonitorService
 ```
+
+---
+
+## 📸 Screenshots
+
+| App List Screen | Lock App | Lock Screen | Settings |
+|-----------------|----------|-------------|----------|
+| ![App List](screenshots/app_list.png) | ![Lock App](screenshots/lock_app.png) | ![Lock Screen](screenshots/lock_screen.png) | ![Settings](screenshots/settings.png) |
 
 ---
 
@@ -103,7 +118,7 @@ Repository (Data Coordination)
    git clone https://github.com/your-username/package-manager-android.git
    ```
 2. Open in Android Studio (Hedgehog or newer)
-3. Run on an Android device (API 26+)
+3. Run on an Android device (API 29+)
 4. Enable Accessibility Permission for the app
 5. Set your custom PIN and start locking apps!
 
@@ -114,14 +129,16 @@ Repository (Data Coordination)
 - **QUERY_ALL_PACKAGES** (Android 11+) – To list system apps
 - **Accessibility Service** – To monitor app launches
 - **Foreground Service** – For tracking app usage in background (optional)
+- **Draw Over Other Apps** – Required for displaying floating ScreenOverlay (PIN prompt)
+- **KILL_BACKGROUND_PROCESSES** – Used to force-stop apps when needed after failed unlock attempt
 
 ---
 
 ## 👨‍💻 Author
 
 **Munib Hamza**  
-📱 Senior Software Engineer | Android Specialist  
-[LinkedIn](https://www.linkedin.com/in/munib-hamza) | [Upwork](https://www.upwork.com/freelancers/~01f33c5ea877b17eb1) | [GitHub](https://github.com/munibhamza)
+📱 Mobile App Consultant | Android Specialist  
+[LinkedIn](https://www.linkedin.com/in/munib-hamza/) | [Upwork](https://www.upwork.com/freelancers/~01f33c5ea877b17eb1) | [GitHub](https://github.com/munibhamza)
 
 ---
 

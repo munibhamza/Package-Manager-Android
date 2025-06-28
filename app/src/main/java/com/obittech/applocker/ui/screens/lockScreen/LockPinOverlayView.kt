@@ -1,4 +1,4 @@
-package com.obittech.applocker.presentation.screens.lockScreen
+package com.obittech.applocker.ui.screens.lockScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

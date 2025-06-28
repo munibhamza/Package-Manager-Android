@@ -1,4 +1,4 @@
-package com.obittech.applocker.presentation.screens.appsList
+package com.obittech.applocker.ui.screens.appsList
 
 import android.content.Context
 import android.content.pm.PackageManager

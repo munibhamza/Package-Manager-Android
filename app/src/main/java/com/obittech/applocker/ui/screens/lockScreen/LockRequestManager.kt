@@ -1,4 +1,4 @@
-package com.obittech.applocker.presentation.screens.lockScreen
+package com.obittech.applocker.ui.screens.lockScreen
 
 object LockRequestManager {
     var pendingAppPackage: String? = null

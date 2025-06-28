@@ -1,6 +1,5 @@
-package com.obittech.applocker.presentation.screens.lockScreen
+package com.obittech.applocker.ui.screens.lockScreen
 
-import android.app.ActivityManager
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
@@ -10,13 +9,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.obittech.applocker.data.LockedAppRepository
 import com.obittech.applocker.security.PasswordHasher
 import com.obittech.applocker.utils.unlockmanager.UnlockSessionManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

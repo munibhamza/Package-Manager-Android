@@ -1,4 +1,4 @@
-package com.obittech.applocker.presentation.screens.components
+package com.obittech.applocker.ui.screens.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardOptions

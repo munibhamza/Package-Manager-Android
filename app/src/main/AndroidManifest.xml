@@ -22,7 +22,7 @@
         android:theme="@style/Theme.AppLocker"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.screens.lockScreen.LockScreenActivity"
+            android:name=".ui.screens.lockScreen.LockScreenActivity"
             android:exported="false"
             android:showWhenLocked="true"
             android:turnScreenOn="true"/>

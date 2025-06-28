@@ -1,9 +1,9 @@
-package com.obittech.applocker.presentation
+package com.obittech.applocker.ui
 
-import com.obittech.applocker.presentation.AppLockerDestinationsArgs.APP_ID_ARG
-import com.obittech.applocker.presentation.AppLockerScreens.APPS_LIST_SCREEN
-import com.obittech.applocker.presentation.AppLockerScreens.APP_DETAIL_SCREEN
-import com.obittech.applocker.presentation.AppLockerScreens.SETTINGS_SCREEN
+import com.obittech.applocker.ui.AppLockerDestinationsArgs.APP_ID_ARG
+import com.obittech.applocker.ui.AppLockerScreens.APPS_LIST_SCREEN
+import com.obittech.applocker.ui.AppLockerScreens.APP_DETAIL_SCREEN
+import com.obittech.applocker.ui.AppLockerScreens.SETTINGS_SCREEN
 
 private object AppLockerScreens {
     const val APPS_LIST_SCREEN = "apps_list"

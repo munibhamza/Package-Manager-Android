@@ -9,7 +9,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import androidx.compose.ui.platform.ComposeView
-import com.obittech.applocker.presentation.screens.lockScreen.LockPinOverlayView
+import com.obittech.applocker.ui.screens.lockScreen.LockPinOverlayView
 
 @SuppressLint("StaticFieldLeak")
 object OverlayManager {

@@ -1,4 +1,4 @@
-package com.obittech.applocker.presentation.screens.about
+package com.obittech.applocker.ui.screens.about
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

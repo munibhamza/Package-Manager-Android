@@ -1,7 +1,5 @@
 package com.obittech.applocker
 
-import android.accessibilityservice.AccessibilityService
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,28 +7,20 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDrawerState
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.core.content.ContextCompat
-import com.obittech.applocker.data.LockedAppRepository
 import com.obittech.applocker.domain.models.AppInfo
-import com.obittech.applocker.presentation.screens.appsList.AppListScreen
-import com.obittech.applocker.presentation.screens.components.DrawerContent
+import com.obittech.applocker.ui.screens.appsList.AppListScreen
+import com.obittech.applocker.ui.screens.components.DrawerContent
 import com.obittech.applocker.services.AccessibilityWatchdogService
 import com.obittech.applocker.services.AppLockAccessibilityService
 import com.obittech.applocker.ui.theme.AppLockerTheme
@@ -38,7 +28,6 @@ import com.obittech.applocker.utils.AccessibilityPromptDialog
 import com.obittech.applocker.utils.isAccessibilityServiceEnabled
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

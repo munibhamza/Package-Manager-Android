@@ -10,26 +10,15 @@ import android.os.Build
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import com.obittech.applocker.MainActivity
 import com.obittech.applocker.data.LockedAppRepository
-import com.obittech.applocker.presentation.screens.lockScreen.LockRequestManager
-import com.obittech.applocker.presentation.screens.lockScreen.LockScreenActivity
-import com.obittech.applocker.utils.LockedAppsCache
-import com.obittech.applocker.utils.OverlayManager
-import com.obittech.applocker.utils.isSystemApp
+import com.obittech.applocker.ui.screens.lockScreen.LockScreenActivity
 import com.obittech.applocker.utils.unlockmanager.UnlockSessionManager
-import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
-import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 @AndroidEntryPoint

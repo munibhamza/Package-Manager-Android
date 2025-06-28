@@ -4,4 +4,6 @@
     <string name="open_drawer">Open Drawer\n</string>
     <string name="accessibility_service_description">Accesibility Service monitoring launch itents</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="settings">Settings</string>
+    <string name="pop_back">pop_back</string>
 </resources>
