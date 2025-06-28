@@ -1,5 +1,5 @@
 <p >
-  <img src="assets/app_locker_si_dark.png" alt="Package Manager App Locker" width="1024" />
+  <img src="assets/app_locker_si_dark.png" alt="Package Manager App Locker" width="1024" height="382" />
 </p>
 
 # 📦 Package Manager Android (App Locker)
