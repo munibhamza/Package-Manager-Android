@@ -10,11 +10,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.obittech.applocker.data.LockedAppRepository
 import com.obittech.applocker.security.PasswordHasher
 import com.obittech.applocker.utils.unlockmanager.UnlockSessionManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,7 +42,7 @@ class LockScreenActivity : ComponentActivity() {
                 it.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             }
         }
-        // Disable dismiss on outside touch
+
         setFinishOnTouchOutside(false)
 
         setContent{
