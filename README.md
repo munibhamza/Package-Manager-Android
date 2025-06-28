@@ -1,3 +1,7 @@
+<p >
+  <img src="assets/app_locker_si_dark.png" alt="Package Manager App Locker" width="1024" />
+</p>
+
 # 📦 Package Manager Android (App Locker)
 
 ![Platform](https://img.shields.io/badge/platform-android-blue.svg)
