@@ -70,8 +70,8 @@ Repository (Data Coordination)
 
 ## 📸 Screenshots
 
-| App List Screen | Lock App | Lock Screen | Settings |
-|-----------------|----------|-------------|----------|
+| App List Screen                       | Lock App                              | Lock Screen                                 | Settings                              |
+|---------------------------------------|---------------------------------------|---------------------------------------------|---------------------------------------|
 | ![App List](screenshots/app_list.png) | ![Lock App](screenshots/lock_app.png) | ![Lock Screen](screenshots/lock_screen.png) | ![Settings](screenshots/settings.png) |
 
 ---
