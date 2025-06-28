@@ -70,9 +70,9 @@ Repository (Data Coordination)
 
 ## 📸 Screenshots
 
-| App List Screen                       | Lock App                              | Lock Screen                                 | Settings                              |
-|---------------------------------------|---------------------------------------|---------------------------------------------|---------------------------------------|
-| ![App List](screenshots/app_list.png) | ![Lock App](screenshots/lock_app.png) | ![Lock Screen](screenshots/lock_screen.png) | ![Settings](screenshots/settings.png) |
+| App List Screen | Lock App | Lock Screen | Settings |
+|-----------------|----------|-------------|----------|
+| <img src="screenshots/app_list.png" width="220"/> | <img src="screenshots/lock_app.png" width="220"/> | <img src="screenshots/lock_screen.png" width="220"/> | <img src="screenshots/settings.png" width="220"/> |
 
 ---
 
