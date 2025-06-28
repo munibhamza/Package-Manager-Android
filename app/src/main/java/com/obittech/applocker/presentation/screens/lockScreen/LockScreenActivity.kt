@@ -52,7 +52,7 @@ class LockScreenActivity : ComponentActivity() {
 //                    val activityManager =
 //                        getSystemService(ACTIVITY_SERVICE) as ActivityManager
 //                    activityManager.killBackgroundProcesses(targetPackageName)
-                    finish()
+                    finishAffinity()
                 }
             )
         }
@@ -74,7 +74,7 @@ class LockScreenActivity : ComponentActivity() {
                 unlockManager.unlockApp(targetPackageName)
                 val launchIntent = packageManager.getLaunchIntentForPackage(targetPackageName)
                 startActivity(launchIntent)
-                finish()
+                finishAffinity()
             } else {
                 Toast.makeText(this@LockScreenActivity, "Incorrect PIN", Toast.LENGTH_SHORT).show()
             }
