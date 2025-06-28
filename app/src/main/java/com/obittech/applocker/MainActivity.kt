@@ -23,6 +23,7 @@ import com.obittech.applocker.ui.screens.appsList.AppListScreen
 import com.obittech.applocker.ui.screens.components.DrawerContent
 import com.obittech.applocker.services.AccessibilityWatchdogService
 import com.obittech.applocker.services.AppLockAccessibilityService
+import com.obittech.applocker.ui.screens.settings.SettingsScreen
 import com.obittech.applocker.ui.theme.AppLockerTheme
 import com.obittech.applocker.utils.AccessibilityPromptDialog
 import com.obittech.applocker.utils.isAccessibilityServiceEnabled
