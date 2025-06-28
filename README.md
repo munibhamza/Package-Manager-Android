@@ -29,7 +29,7 @@ This project is built using **modern Android Jetpack libraries** and a scalable 
 - **Architecture**: MVVM + Clean Architecture Principles
 - **State Management**: Compose States + `StateFlow`, `SharedFlow`
 - **Dependency Injection**: Dagger Hilt
-- **Local Storage**: Room Database
+- **Local Storage**: Room Database & DataStore
 - **App Monitoring**: Accessibility Service
 - **Coroutines**: Inactivity timeout, lifecycle-aware flows
 - **Theming**: Dark/Light mode support with dynamic logo
