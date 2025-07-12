@@ -85,9 +85,9 @@ Repository (Data Coordination)
 |-------------------------------------------------------|--------------------------------------------------------|---------------------|
 | <img src="screenshots/onboarding_a.png" width="220"/> | <img src="screenshots/onboarding_b.png" width="220"/> | <img src="screenshots/app_list.png" width="220"/> |
 
-| 🔒 Lock App                                           | 🔐 Lock Screen                                         | ⚙️ Settings Screen |
+| 🔒 Lock App                                           | ⚙️ Settings Screen                                     | 🔐 Lock Screen     |
 |-------------------------------------------------------|--------------------------------------------------------|--------------------|
-| <img src="screenshots/lock_app.png" width="220"/>     | <img src="screenshots/lock_screen.png" width="220"/>  | <img src="screenshots/settings.png" width="220"/> |
+| <img src="screenshots/lock_app.png" width="220"/>     | <img src="screenshots/settings.png" width="220"/>      | <img src="screenshots/lock_screen.png" width="220"/> |
 
 ---
 
