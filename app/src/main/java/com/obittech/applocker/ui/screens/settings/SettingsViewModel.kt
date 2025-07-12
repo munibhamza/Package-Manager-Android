@@ -1,18 +1,19 @@
 package com.obittech.applocker.ui.screens.settings
 
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.obittech.applocker.datastore.AppPreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-//    private val dataStore: DataStore<Preferences>
+    private val preferences: AppPreferencesManager,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SettingsUiState())
@@ -20,39 +21,36 @@ class SettingsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-//            dataStore.data.collect { prefs ->
-//                _uiState.value = SettingsUiState(
-//                    useOverlay = prefs[SettingsKeys.USE_OVERLAY] ?: false,
-//                    lockOnUnlock = prefs[SettingsKeys.LOCK_ON_UNLOCK] ?: true
-//                )
-//            }
+            _uiState.value = SettingsUiState(
+                useOverlay = preferences.useOverlayFlow.firstOrNull() ?: false,
+                lockOnUnlock = preferences.lockOnUnlockFlow.firstOrNull() ?: true,
+                pin = preferences.appPinFlow.firstOrNull() ?: ""
+            )
         }
     }
 
     fun setOverlayUsage(enabled: Boolean) {
         viewModelScope.launch {
-//            dataStore.edit { it[SettingsKeys.USE_OVERLAY] = enabled }
+            preferences.setUseOverlay(enabled)
         }
     }
 
     fun setLockOnUnlock(enabled: Boolean) {
         viewModelScope.launch {
-//            dataStore.edit { it[SettingsKeys.LOCK_ON_UNLOCK] = enabled }
+            preferences.setLockOnUnlock(enabled)
+        }
+    }
+
+    fun setPin(pin: String) {
+        viewModelScope.launch {
+            preferences.setAppPin(pin)
         }
     }
 }
 
 // SettingsUiState.kt
 data class SettingsUiState(
-    val useOverlay: Boolean = false,
-    val lockOnUnlock: Boolean = true
+    var useOverlay: Boolean = false,
+    val lockOnUnlock: Boolean = true,
+    val pin: String = ""
 )
-
-// SettingsDataStoreModule.kt
-
-
-// SettingsKeys.kt
-object SettingsKeys {
-    val USE_OVERLAY = booleanPreferencesKey("use_overlay")
-    val LOCK_ON_UNLOCK = booleanPreferencesKey("lock_on_unlock")
-}

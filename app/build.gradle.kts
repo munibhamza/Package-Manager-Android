@@ -53,6 +53,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    //compose navigations
+    //implementation("androidx.navigation:navigation-compose:2.9.0")
+
 
     // Hilt
     implementation(libs.hilt.android.core)
@@ -62,11 +65,13 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
+
     ksp(libs.hilt.compiler)
 
     //DataStore
-    implementation(libs.androidx.datastore.core.android)
-    implementation(libs.androidx.datastore.preferences.core.android)
+//    implementation(libs.androidx.datastore.core.android)
+//    implementation(libs.androidx.datastore.preferences.core.android)
+    implementation(libs.androidx.datastore.preferences)
 
     // Room
     implementation(libs.room.runtime)

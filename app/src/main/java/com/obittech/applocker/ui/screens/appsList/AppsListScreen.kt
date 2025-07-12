@@ -28,6 +28,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -48,11 +50,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.obittech.applocker.R
 import com.obittech.applocker.domain.models.AppInfo
 import com.obittech.applocker.ui.screens.components.LockPinDialog
 import com.obittech.applocker.security.PasswordHasher
+import com.obittech.applocker.services.AppLockAccessibilityService
 import com.obittech.applocker.ui.theme.AppLockerTheme
+import com.obittech.applocker.utils.AccessibilityChecker
+import com.obittech.applocker.utils.AccessibilityPromptDialog
 import com.obittech.applocker.utils.AppLockerTopAppBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -71,11 +79,13 @@ fun AppListScreen(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var showPinDialog by remember { mutableStateOf(false) }
     var clickedApp by remember { mutableStateOf<AppInfo?>(null) }
     var isSettingPin by remember { mutableStateOf(true) }
     val appsList by viewModel.apps.collectAsState()
+    var shouldShowAllowAccessibilityPermission by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
         viewModel.snackbarEvent.collect { message ->
@@ -84,6 +94,15 @@ fun AppListScreen(
             }
         }
     }
+
+    AccessibilityPromptDialog(
+        showDialog = viewModel.showAccessibilityPrompt.value,
+        onDismiss = { viewModel.setShowAccessibilityPrompt(false) },
+        onOpenSettings = {
+            viewModel.setShowAccessibilityPrompt(false)
+            AccessibilityChecker.allowAccessibilityServiceIntent(context)
+        }
+    )
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),

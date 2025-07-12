@@ -5,6 +5,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.os.Build
 import android.provider.Settings
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -15,17 +16,17 @@ fun formatTime(timestamp: Long): String {
     return sdf.format(Date(timestamp))
 }
 
-fun isAccessibilityServiceEnabled(context: Context, serviceClass: Class<out AccessibilityService>): Boolean {
-    val expectedComponent = ComponentName(context, serviceClass)
-    val enabledServices = Settings.Secure.getString(
-        context.contentResolver,
-        Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
-    ) ?: return false
-
-    return enabledServices.split(":").any {
-        ComponentName.unflattenFromString(it) == expectedComponent
-    }
-}
+//fun isAccessibilityServiceEnabled(context: Context, serviceClass: Class<out AccessibilityService>): Boolean {
+//    val expectedComponent = ComponentName(context, serviceClass)
+//    val enabledServices = Settings.Secure.getString(
+//        context.contentResolver,
+//        Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+//    ) ?: return false
+//
+//    return enabledServices.split(":").any {
+//        ComponentName.unflattenFromString(it) == expectedComponent
+//    }
+//}
 
 object LockedAppsCache {
     private val lockedAppsMap = mutableMapOf<String, String>()
@@ -74,3 +75,10 @@ fun isSystemApp(context: Context, pkg: String): Boolean {
         false
     }
 }
+
+object IntentKeys {
+    const val TARGET_PACKAGE = "TARGET_PACKAGE"
+    const val TARGET_PIN = "TARGET_PIN"
+}
+
+fun isApi33Plus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU

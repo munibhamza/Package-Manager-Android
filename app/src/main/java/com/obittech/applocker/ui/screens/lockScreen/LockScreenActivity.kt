@@ -12,6 +12,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.obittech.applocker.data.LockedAppRepository
 import com.obittech.applocker.security.PasswordHasher
+import com.obittech.applocker.utils.IntentKeys
 import com.obittech.applocker.utils.unlockmanager.UnlockSessionManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ class LockScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        targetPackageName = intent.getStringExtra("packageName") ?: run {
+        targetPackageName = intent.getStringExtra(IntentKeys.TARGET_PACKAGE) ?: run {
             finish()
             return
         }

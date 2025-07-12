@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,78 +12,158 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.obittech.applocker.datastore.AppPreferencesManager
 import com.obittech.applocker.domain.models.AppInfo
 import com.obittech.applocker.ui.screens.appsList.AppListScreen
 import com.obittech.applocker.ui.screens.components.DrawerContent
 import com.obittech.applocker.services.AccessibilityWatchdogService
 import com.obittech.applocker.services.AppLockAccessibilityService
+import com.obittech.applocker.ui.NavigationRoutes
+import com.obittech.applocker.ui.navigation.AppNavigator
+import com.obittech.applocker.ui.screens.about.AboutScreen
+import com.obittech.applocker.ui.screens.onboarding.OnboardingScreen
 import com.obittech.applocker.ui.screens.settings.SettingsScreen
+import com.obittech.applocker.ui.screens.splash.SplashScreen
 import com.obittech.applocker.ui.theme.AppLockerTheme
+import com.obittech.applocker.utils.AccessibilityChecker
 import com.obittech.applocker.utils.AccessibilityPromptDialog
-import com.obittech.applocker.utils.isAccessibilityServiceEnabled
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject lateinit var preferences: AppPreferencesManager
+    @Inject lateinit var appNavigator: AppNavigator
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        getCurrentLauncher()
+//        getCurrentLauncher()
 //        startWatchDogService()
 
         val appsList = queryAllPackages()
 //        val appsList = queryResolvedInfos(this@MainActivity)
         setContent {
-            AppLockerTheme {
 
-                val drawerState = rememberDrawerState(DrawerValue.Closed)
-                val scope = rememberCoroutineScope()
+            val navController = rememberNavController()
+            appNavigator.setNavController(navController)
 
+            val drawerState = rememberDrawerState(DrawerValue.Closed)
+            val scope = rememberCoroutineScope()
 
-                val showAccessibilityPermissionDialog = remember { mutableStateOf(false) }
-                LaunchedEffect(Unit) {
-                    val isEnabled = isAccessibilityServiceEnabled(
-                        this@MainActivity,
-                        AppLockAccessibilityService::class.java
-                    )
-                    if (!isEnabled) {
-                        showAccessibilityPermissionDialog.value = true
+            var isReady by remember { mutableStateOf(false) }
+
+            val onboardingComplete by preferences.onboardingCompleteFlow
+                .collectAsState(initial = null)
+            println("Onboarding value = $onboardingComplete")
+            // ✅ Simulate splash loading before deciding navigation
+            LaunchedEffect(onboardingComplete) {
+                if (onboardingComplete != null) {
+                    delay(1000) // still show splash briefly
+                    isReady = true
+
+                    navController.navigate(
+                        if (onboardingComplete == true) NavigationRoutes.HOME else NavigationRoutes.ONBOARDING
+                    ) {
+                        popUpTo(NavigationRoutes.SPLASH) { inclusive = true }
                     }
                 }
+            }
 
-                AccessibilityPromptDialog(
-                    showDialog = showAccessibilityPermissionDialog.value,
-                    onDismiss = { showAccessibilityPermissionDialog.value = false },
-                    onOpenSettings = {
-                        showAccessibilityPermissionDialog.value = false
-                        val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        this@MainActivity.startActivity(intent)
-                    }
-                )
+
+            AppLockerTheme {
+
+//                val showAccessibilityPermissionDialog = remember { mutableStateOf(false) }
+//                LaunchedEffect(Unit) {
+//                    val isEnabled = isAccessibilityServiceEnabled(
+//                        this@MainActivity,
+//                        AppLockAccessibilityService::class.java
+//                    )
+//                    if (!isEnabled) {
+//                        showAccessibilityPermissionDialog.value = true
+//                    }
+//                }
+//
+//                AccessibilityPromptDialog(
+//                    showDialog = showAccessibilityPermissionDialog.value,
+//                    onDismiss = { showAccessibilityPermissionDialog.value = false },
+//                    onOpenSettings = {
+//                        showAccessibilityPermissionDialog.value = false
+//                        val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+//                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//                        this@MainActivity.startActivity(intent)
+//                    }
+//                )
 
                 ModalNavigationDrawer(
                     drawerState = drawerState,
                     drawerContent = {
                         DrawerContent(){onDestinationClicked ->
                             scope.launch { drawerState.close() }
+                            when(onDestinationClicked){
+                                NavigationRoutes.SETTINGS -> appNavigator.navigateToSettings()
+                                NavigationRoutes.ABOUT -> appNavigator.navigateToAbout()
+                            }
                         }
                     }
                 ) {
-                    AppListScreen(
-                        openDrawer = {
-                            scope.launch { drawerState.open() }
+
+                    NavHost(
+                        navController = navController,
+                        startDestination = NavigationRoutes.SPLASH
+                    ) {
+                        composable(NavigationRoutes.SPLASH) { SplashScreen() }
+
+                        composable(NavigationRoutes.ONBOARDING) {
+                            OnboardingScreen(
+                                onFinished = {
+                                    appNavigator.navigateToHome()
+                                }
+                            )
                         }
-                    )
+
+                        composable(NavigationRoutes.HOME) {
+                            AppListScreen(
+                                openDrawer = {
+                                    scope.launch { drawerState.open() }
+                                }
+                            )
+                        }
+
+                        composable(NavigationRoutes.SETTINGS) {
+                            SettingsScreen()
+                        }
+
+                        composable(NavigationRoutes.ABOUT) {
+                            AboutScreen()
+                        }
+                    }
+
+
+//                    AppListScreen(
+//                        openDrawer = {
+//                            scope.launch { drawerState.open() }
+//                        }
+//                    )
                 }
             }
         }

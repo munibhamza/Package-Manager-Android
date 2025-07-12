@@ -1,5 +1,6 @@
 package com.obittech.applocker.ui.screens.lockScreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,13 +18,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import com.obittech.applocker.R
 
 @Composable
 fun LockScreenUI(
@@ -54,14 +62,21 @@ fun LockScreenUI(
                 singleLine = true
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { onPinSubmit(pinInput) }) {
-                Text("Unlock")
+            Row (modifier = Modifier
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Absolute.SpaceEvenly
+            ){
+                OutlinedButton(
+                    onClick = { onCancelled() }) {
+                    Text("Cancel")
+                }
+                Button(
+                    onClick = { onPinSubmit(pinInput) }
+                ) {
+                    Text("Unlock")
+                }
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                onClick = { onCancelled() }) {
-                Text("Cancel")
-            }
+
         }
     }
 

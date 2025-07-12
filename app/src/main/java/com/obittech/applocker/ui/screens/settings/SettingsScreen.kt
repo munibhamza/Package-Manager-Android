@@ -110,13 +110,19 @@ fun SettingsScreenContent(viewModel: SettingsViewModel = hiltViewModel(), modifi
         Row(verticalAlignment = Alignment.CenterVertically) {
             RadioButton(
                 selected = !uiState.useOverlay,
-                onClick = { viewModel.setOverlayUsage(false) }
+                onClick = {
+                    uiState.useOverlay = !uiState.useOverlay
+                    viewModel.setOverlayUsage(uiState.useOverlay)
+                }
             )
             Text("Use Activity")
             Spacer(modifier = Modifier.width(16.dp))
             RadioButton(
                 selected = uiState.useOverlay,
-                onClick = { viewModel.setOverlayUsage(true) }
+                onClick = {
+                    uiState.useOverlay = !uiState.useOverlay
+                    viewModel.setOverlayUsage(uiState.useOverlay)
+                }
             )
             Text("Use Overlay")
         }

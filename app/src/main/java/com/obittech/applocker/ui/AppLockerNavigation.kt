@@ -23,6 +23,15 @@ object AppLockerDestinations {
     const val SETTINGS_ROUTE = SETTINGS_SCREEN
 }
 
+object NavigationRoutes {
+    const val SPLASH = "splash"
+    const val ONBOARDING = "onboarding"
+    const val HOME = "home"
+    const val SETTINGS = "settings"
+    const val ABOUT = "about"
+}
+
+
 
 //class TodoNavigationActions(private val navController: NavHostController) {
 //

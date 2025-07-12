@@ -21,7 +21,7 @@ object DatabaseModule {
             AppDatabase::class.java,
             "locked_app_db"
         )
-            .fallbackToDestructiveMigration()
+            .fallbackToDestructiveMigration(false)
             .build()
     }
 

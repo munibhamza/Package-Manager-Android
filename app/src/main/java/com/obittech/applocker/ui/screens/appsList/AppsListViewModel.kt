@@ -2,12 +2,19 @@ package com.obittech.applocker.ui.screens.appsList
 
 import android.content.Context
 import android.content.pm.PackageManager
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.obittech.applocker.data.LockedAppRepository
 import com.obittech.applocker.data.source.LockedAppEntity
 import com.obittech.applocker.domain.models.AppInfo
 import com.obittech.applocker.security.PasswordHasher
+import com.obittech.applocker.services.AppLockAccessibilityService
+import com.obittech.applocker.ui.screens.onboarding.ErrorType
+import com.obittech.applocker.utils.AccessibilityChecker
+import com.obittech.applocker.utils.AccessibilityChecker.isAccessibilityServiceEnabled
+import com.obittech.applocker.utils.OverlayPermissionChecker.isOverlayPermissionGranted
 import com.obittech.applocker.utils.setAppHidden
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -32,8 +39,20 @@ class AppsListViewModel @Inject constructor(
     private val _apps = MutableStateFlow<List<AppInfo>>(emptyList())
     val apps: StateFlow<List<AppInfo>> = _apps.asStateFlow()
 
+    private val _showAccessibilityPrompt = mutableStateOf(false)
+    val showAccessibilityPrompt: State<Boolean> = _showAccessibilityPrompt
+
     init {
         loadApps()
+        _showAccessibilityPrompt.value = !isAccessibilityServiceEnabled(context, AppLockAccessibilityService::class.java)
+    }
+
+    fun setShowAccessibilityPrompt(value: Boolean) {
+        _showAccessibilityPrompt.value = value
+    }
+
+    fun isAccessibilityServiceEnabled(): Boolean {
+        return !AccessibilityChecker.isAccessibilityServiceEnabled(context, AppLockAccessibilityService::class.java)
     }
 
     fun loadApps() {
