@@ -17,8 +17,14 @@
 
 ## 🔐 Key Features
 
-- 🔒 **Lock Any App** with a custom PIN
+- 🧭 **New Onboarding Flow** – step-by-step setup with a clickable progress bar UI
+    - Step 1: Allow Accessibility Service Permission
+    - Step 2: Allow “Draw over other apps” Permission
+    - Step 3: Set Up App PIN
+    - Step 4: Configure Preferences
+    - Step 5: Setup Completed Screen (navigates to app)
 - 📱 **Installed Apps Listing** – lists user and system apps using Launcher Intent & PackageManager
+- 🔒 **Lock Any App** with a custom PIN
 - 🧩 **Custom Lock Screen** (Composable PIN UI) or Floating ScreenOverlay
 - 🕒 **Auto Re-lock After 5 Minutes** of inactivity or screen off
 - 🧠 **Smart Runtime Caching** for better performance & responsiveness
@@ -26,7 +32,6 @@
 - 🎛️ **Settings Panel** – Switch between LockScreen or Overlay Prompt, manage app unlock behavior
 - 🗄️ **Persistent Storage** with Room database for locked apps
 - 🔄 **Lifecycle-aware Inactivity Timer** using coroutines and flows
-
 ---
 
 ## 🧪 Tech Stack & Architecture
@@ -49,12 +54,14 @@ This project is built using **modern Android Jetpack libraries** and a scalable 
 
 ## 📱 Screens Overview
 
-| Feature                     | Description                                                                 |
-|----------------------------|-----------------------------------------------------------------------------|
-| 🔍 **App List Screen**     | Displays all installed apps using Launcher Intent, supports system apps too |
-| 🔐 **Lock Screen**         | Asks for PIN using a composable UI; fallback to Overlay Dialog supported   |
-| ⚙️ **Settings Screen**     | Configure lock behavior (e.g., use overlay or activity, re-lock options)    |
-| 🕵️‍♂️ **Background Service**| Monitors foreground app launch using Accessibility Service                  |
+| Feature                       | Description                                                                        |
+|-------------------------------|------------------------------------------------------------------------------------|
+| 🚀 **Onboarding Flow**        | Guides user through permission setup, PIN creation, and preference settings        |
+| 📊 **Step Progress Bar**      | Visually tracks onboarding steps; each step is clickable and interactive           |
+| 🔍 **App List Screen**        | Displays all installed apps using Launcher Intent, supports system apps too        |
+| 🔐 **Lock Screen**            | Asks for PIN using a composable UI; fallback to Overlay Dialog supported           |
+| ⚙️ **Settings Screen**        | Configure lock behavior (e.g., use overlay or activity, re-lock options)           |
+| 🕵️‍♂️ **Background Service** | Monitors foreground app launch using Accessibility Service                         |
 
 ---
 
@@ -74,9 +81,13 @@ Repository (Data Coordination)
 
 ## 📸 Screenshots
 
-| App List Screen | Lock App | Lock Screen | Settings |
-|-----------------|----------|-------------|----------|
-| <img src="screenshots/app_list.png" width="220"/> | <img src="screenshots/lock_app.png" width="220"/> | <img src="screenshots/lock_screen.png" width="220"/> | <img src="screenshots/settings.png" width="220"/> |
+| 🛡️ Onboarding (Allow Permission)                     | ✅ Onboarding (Setup Complete)                         | 📱 App List Screen | 🔒 Lock App |
+|-------------------------------------------------------|-------------------------------------------------------|---------------------|-------------|
+| <img src="screenshots/onboarding_a.png" width="220"/> | <img src="screenshots/onboarding_b.png" width="220"/> | <img src="screenshots/app_list.png" width="220"/> | <img src="screenshots/lock_app.png" width="220"/> |
+
+| 🔐 Lock Screen | ⚙️ Settings Screen |
+|----------------|--------------------|
+| <img src="screenshots/lock_screen.png" width="220"/> | <img src="screenshots/settings.png" width="220"/> |
 
 ---
 
@@ -92,8 +103,14 @@ Repository (Data Coordination)
 
 ## 🧪 How It Works
 
-- App starts and lists all launchable apps.
-- User selects apps to lock.
+- App starts with an interactive **Onboarding Flow** using a step progress UI.
+- Steps include:
+    1. Allow Accessibility Permission
+    2. Allow “Draw over other apps” Permission
+    3. Set custom App PIN
+    4. Choose Preferences
+    5. Final screen confirms setup is complete and navigates to main app
+- User selects apps to lock from the App List screen.
 - Accessibility Service continuously monitors foreground app launch.
 - If a locked app is launched:
     - User is prompted with LockScreen or a floating Overlay PIN dialog.
@@ -105,7 +122,7 @@ Repository (Data Coordination)
 ## 📁 Folder Structure Overview
 
 ```
-├── ui/               → Compose screens (AppList, LockScreen, Settings)
+├── ui/               → Compose screens (Onboarding, AppList, LockScreen, Settings)
 ├── viewmodel/        → ViewModels with StateFlows
 ├── data/             → Repositories and Room database
 ├── di/               → Hilt modules for dependency injection

@@ -1,5 +1,7 @@
 package com.obittech.applocker.ui.screens.settings
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.obittech.applocker.datastore.AppPreferencesManager
@@ -24,7 +26,8 @@ class SettingsViewModel @Inject constructor(
             _uiState.value = SettingsUiState(
                 useOverlay = preferences.useOverlayFlow.firstOrNull() ?: false,
                 lockOnUnlock = preferences.lockOnUnlockFlow.firstOrNull() ?: true,
-                pin = preferences.appPinFlow.firstOrNull() ?: ""
+                pin = preferences.appPinFlow.firstOrNull() ?: "",
+                onboardingComplete = preferences.onboardingCompleteFlow.firstOrNull() ?: true
             )
         }
     }
@@ -41,6 +44,12 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setOnboardingComplete(enabled: Boolean) {
+        viewModelScope.launch {
+            preferences.setOnboardingComplete(enabled)
+        }
+    }
+
     fun setPin(pin: String) {
         viewModelScope.launch {
             preferences.setAppPin(pin)
@@ -52,5 +61,6 @@ class SettingsViewModel @Inject constructor(
 data class SettingsUiState(
     var useOverlay: Boolean = false,
     val lockOnUnlock: Boolean = true,
+    val onboardingComplete: Boolean = true,
     val pin: String = ""
 )

@@ -140,6 +140,21 @@ fun SettingsScreenContent(viewModel: SettingsViewModel = hiltViewModel(), modifi
             Spacer(modifier = Modifier.width(8.dp))
             Text("Lock apps on device unlock")
         }
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp)
+        ) {
+            Checkbox(
+                checked = uiState.onboardingComplete,
+                onCheckedChange = { viewModel.setOnboardingComplete(it) }
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Setup completed on Onboarding")
+        }
+
     }
 }
 

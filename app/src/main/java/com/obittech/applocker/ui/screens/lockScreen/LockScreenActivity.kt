@@ -12,6 +12,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.obittech.applocker.data.LockedAppRepository
 import com.obittech.applocker.security.PasswordHasher
+import com.obittech.applocker.ui.theme.AppLockerTheme
 import com.obittech.applocker.utils.IntentKeys
 import com.obittech.applocker.utils.unlockmanager.UnlockSessionManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,17 +45,20 @@ class LockScreenActivity : ComponentActivity() {
         setFinishOnTouchOutside(false)
 
         setContent{
-            LockScreenUI(
-                onPinSubmit = { enteredPin ->
-                    handlePinVerification(enteredPin)
-                },
-                onCancelled = {
+            AppLockerTheme {
+                LockScreenUI(
+                    onPinSubmit = { enteredPin ->
+                        handlePinVerification(enteredPin)
+                    },
+                    onCancelled = {
 //                    val activityManager =
 //                        getSystemService(ACTIVITY_SERVICE) as ActivityManager
 //                    activityManager.killBackgroundProcesses(targetPackageName)
-                    finishAffinity()
-                }
-            )
+                        finishAffinity()
+                    }
+                )
+            }
+
         }
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(enabled = true){

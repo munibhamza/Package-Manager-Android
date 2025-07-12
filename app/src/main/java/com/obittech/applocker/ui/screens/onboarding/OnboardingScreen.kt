@@ -87,7 +87,7 @@ fun OnboardingScreen(
         {
             PermissionStep(
                 title = "Accessibility Service",
-                description = "Needed to monitor which app is opened.",
+                description = "Accessibility Control Permission is required to monitor which app is opened.",
 //                checkGranted = {
 //                    isAccessibilityServiceEnabled(context, AppLockAccessibilityService::class.java)
 //                },
@@ -102,7 +102,7 @@ fun OnboardingScreen(
         {
             PermissionStep(
                 title = "Draw Over Other Apps",
-                description = "Required to show the lock screen over other apps.",
+                description = "Draw Over other Apps Permission is required to show the lock screen over other apps.",
 //                checkGranted = { isOverlayPermissionGranted(context) },
 //                openSettingsIntent = {
 //                    requestOverlayPermission(context)
