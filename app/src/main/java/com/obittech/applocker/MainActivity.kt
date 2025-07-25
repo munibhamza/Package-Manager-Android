@@ -60,8 +60,12 @@ class MainActivity : ComponentActivity() {
 //        getCurrentLauncher()
 //        startWatchDogService()
 
-        val appsList = queryAllPackages()
-//        val appsList = queryResolvedInfos(this@MainActivity)
+
+//        val installed_apps = queryInstalledApps()
+//        val installed_packages = queryInstalledPackages()
+//        val installed_launchable_apps = queryAllLaunchableApps()
+//        val appsList_resolvedInfos = queryResolvedInfos(this@MainActivity)
+
         setContent {
 
             val navController = rememberNavController()
@@ -184,26 +188,9 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun queryAllPackages():List<AppInfo> {
-
-//        val apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-
-        //        val packages = packageManager.getInstalledPackages(PackageManager.GET_META_DATA)
-//        Log.d("QUERY_ALL_PACKAGES  -> Packages", "count: ${packages.size}")
-
         //QUERY FILTERED APPS LAUNCHABLE INTENTS
         val apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
             .filter { packageManager.getLaunchIntentForPackage(it.packageName) != null }
-
-//        packages.forEach { pkg ->
-//            Log.d("QUERY_ALL_PACKAGES  -> Package", "pkg_NAME: ${pkg.packageName}, app_Label: ${pkg.applicationInfo?.loadLabel(packageManager).toString()}, app_Name${pkg.applicationInfo?.name}")
-//        }
-//        return packages.map { pkg ->
-//            val appName = pkg.applicationInfo?.loadLabel(packageManager).toString()
-//            val packageName = pkg.applicationInfo?.packageName?:"N/A"
-//            val icon = pkg.applicationInfo?.loadIcon(packageManager)
-////            Log.d("QUERY_ALL_PACKAGES -> Apps  ", "App Name: $appName, Package Name: $packageName, Category:  ${pkg.category}")
-//            AppInfo(packageName = packageName, name = appName, icon = icon)
-//        }
 
         return apps.map { app ->
             val appName = app.loadLabel(packageManager).toString()
@@ -218,7 +205,54 @@ class MainActivity : ComponentActivity() {
 
     }
 
+    private fun queryInstalledApps():List<AppInfo> {
+        //returns all apps including system
+        val apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+        Log.d("QUERY_INSTALLED_APPS", "count: ${apps.size}")
+
+        return apps.map { app ->
+            val appName = app.loadLabel(packageManager).toString()
+            val packageName = app.packageName
+            val icon = app.loadIcon(packageManager)
+            Log.d("QUERY_INSTALLED_APPS", "App Name: ${app.loadLabel(packageManager)}, Package Name: ${app.packageName}")
+            AppInfo(
+                packageName = packageName,
+                name = appName,
+                icon = icon
+            )
+        }
+    }
+    private fun queryInstalledPackages(): List<AppInfo>{
+        //returns all packages including system
+        val packages = packageManager.getInstalledPackages(PackageManager.GET_META_DATA)
+        Log.d("QUERY_INSTALLED_PACKAGES", "count: ${packages.size}")
+        return packages.map { pkg ->
+            val appName = pkg.applicationInfo?.loadLabel(packageManager).toString()
+            val packageName = pkg.applicationInfo?.packageName?:"N/A"
+            val icon = pkg.applicationInfo?.loadIcon(packageManager)
+            Log.d("QUERY_INSTALLED_PACKAGES -> Apps  ", "App Name: $appName, Package Name: $packageName")
+            AppInfo(packageName = packageName, name = appName, icon = icon)
+        }
+    }
+    private fun queryAllLaunchableApps():List<AppInfo> {
+        //returns apps with launchable intent
+        val apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+            .filter { packageManager.getLaunchIntentForPackage(it.packageName) != null }
+
+        return apps.map { app ->
+            val appName = app.loadLabel(packageManager).toString()
+            val packageName = app.packageName
+            val icon = app.loadIcon(packageManager)
+            AppInfo(
+                packageName = packageName,
+                name = appName,
+                icon = icon
+            )
+        }
+
+    }
     private fun queryResolvedInfos(context: Context):List<AppInfo>{
+        //returns installed apps with launchable intent
         val pm = context.packageManager
         val mainIntent = Intent(Intent.ACTION_MAIN, null)
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
